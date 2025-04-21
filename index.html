@@ -15,22 +15,34 @@
     </header>
     <main>
       <!-- Search box section -->
-      <section class="m-10 flex flex-col md:flex-row gap-2">
+      <section class="m-10 mb-0 flex flex-col md:flex-row gap-2">
         <input
           type="text"
           id="cityInput"
           placeholder="   Enter City Name"
           class="border p-2 rounded-2xl w-full"
         />
-        <button id="searchBtn" class="bg-blue-500 text-white px-4 py-2 rounded-2xl">
+        <button
+          id="searchBtn"
+          class="bg-blue-500 text-white px-4 py-2 rounded-2xl"
+        >
           Search
         </button>
         <button
-          id="locateBtn" class="bg-green-500 text-white px-4 py-2 rounded-2xl">
+          id="locateBtn"
+          class="bg-green-500 text-white px-4 py-2 rounded-2xl"
+        >
           Current Location
         </button>
       </section>
-      <section></section>
+
+      <!-- Recent Cities Dropdown Menu -->
+      <section id="recentCities" class="m-10 mt-5 hidden">
+        <label class="block mb-1">Recent Cities:</label>
+        <select id="recentDropdown" class="w-full border p-2 rounded"></select>
+      </section>
+
+      
       <section></section>
     </main>
     <script src="script.js"></script>
