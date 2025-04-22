@@ -9,6 +9,7 @@ const recentCities = document.getElementById("recentCities");
 const recentDropdown = document.getElementById("recentDropdown");
 
 
+// Search functionality
 searchBtn.addEventListener("click", function(){
     const city = cityInput.value.trim();
     if (!city) {
@@ -20,6 +21,8 @@ searchBtn.addEventListener("click", function(){
     updateRecentCities(city);
 });
 
+
+// Dropdown menu
 recentDropdown.addEventListener("change", function(e){
     const city = e.target.value;
     if (city) {
@@ -28,6 +31,7 @@ recentDropdown.addEventListener("change", function(e){
 });
 
 
+// Current location functionality
 locateBtn.addEventListener("click", function(){
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -39,6 +43,8 @@ locateBtn.addEventListener("click", function(){
     );
 });
 
+
+// gets current day weather on city name
 function getWeatherByCity(city) {
     fetch(
       `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`
@@ -56,7 +62,9 @@ function getWeatherByCity(city) {
       });
   }
 
-  function getWeatherByCoords(lat, lon) {
+
+// gets current day weather on current location coordinates
+function getWeatherByCoords(lat, lon) {
     fetch(
       `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`
     )
@@ -67,9 +75,10 @@ function getWeatherByCity(city) {
         updateRecentCities(data.name);
       })
       .catch(() => alert("Failed to fetch weather."));
-  }
+}
 
-  
+
+// displays the current weather  
 function showWeather(data) {
     weatherDisplay.classList.add("p-10");
     weatherDisplay.innerHTML = `
@@ -84,8 +93,10 @@ function showWeather(data) {
         <p>${data.weather[0].description}</p>
       </div>
       `;
-  }
+}
 
+
+// displays 5 day weather forecast 
 function getForecast(lat, lon) {
     fetch(
       `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`
@@ -112,9 +123,11 @@ function getForecast(lat, lon) {
           `;
         });
       });
-  }
-  
-  function updateRecentCities(city) {
+}
+ 
+
+// updates cities searched in local storage
+function updateRecentCities(city) {
     let cities = JSON.parse(localStorage.getItem("recentCities")) || [];
     if (!cities.includes(city)) {
       cities.unshift(city);
@@ -122,9 +135,11 @@ function getForecast(lat, lon) {
       localStorage.setItem("recentCities", JSON.stringify(cities));
       populateDropdown();
     }
-  }
-  
-  function populateDropdown() {
+}
+
+
+// adds the recent entries in dropdown
+function populateDropdown() {
     let cities = JSON.parse(localStorage.getItem("recentCities")) || [];
     if (cities.length) {
       recentCities.classList.remove("hidden");
@@ -132,6 +147,6 @@ function getForecast(lat, lon) {
         .map((city) => `<option value="${city}">${city}</option>`)
         .join("");
     }
-  }
+}
   
-  populateDropdown();
+populateDropdown();
